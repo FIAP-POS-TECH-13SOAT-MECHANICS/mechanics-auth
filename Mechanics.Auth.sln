@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Api", "src\Mechanics.Auth.Api\Mechanics.Auth.Api.csproj", "{0A804D61-C82A-4005-AB00-C7FD4FE6F932}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Application", "src\Mechanics.Auth.Application\Mechanics.Auth.Application.csproj", "{FC00C1E1-8022-4535-9D1E-C1D3BC37FECC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Infra.Data", "src\Mechanics.Auth.Infra.Data\Mechanics.Auth.Infra.Data.csproj", "{B487B422-02BB-4A85-A5E4-B540C856B86D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Tests.Unit", "src\Mechanics.Auth.Tests.Unit\Mechanics.Auth.Tests.Unit.csproj", "{82D05268-4375-4152-91E0-8CC450A0260B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Solution Items", "{77871038-2794-4094-B844-F2176E1001BD}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+		.editorconfig = .editorconfig
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. API Layer", "1. API Layer", "{5798CE03-5B56-460D-BB96-01A5ADAF580B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application Layer", "2. Application Layer", "{A32A0EDF-C9CB-459A-84A3-F8504308FC62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infra Layer", "3. Infra Layer", "{F8313E9C-9E86-4F3B-8760-07217B092DF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Tests Layer", "4. Tests Layer", "{14677E8A-B78F-4535-9FDE-02D4ECC74ADE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Infra.SecretProvider", "Mechanics.Auth.Infra.SecretProvider\Mechanics.Auth.Infra.SecretProvider.csproj", "{8E17DEF4-9C1C-4D6A-865E-8690A6D3D8A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Infra.CrossCutting.IoC", "Mechanics.Auth.Infra.CrossCutting.IoC\Mechanics.Auth.Infra.CrossCutting.IoC.csproj", "{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A804D61-C82A-4005-AB00-C7FD4FE6F932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A804D61-C82A-4005-AB00-C7FD4FE6F932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A804D61-C82A-4005-AB00-C7FD4FE6F932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A804D61-C82A-4005-AB00-C7FD4FE6F932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC00C1E1-8022-4535-9D1E-C1D3BC37FECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC00C1E1-8022-4535-9D1E-C1D3BC37FECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC00C1E1-8022-4535-9D1E-C1D3BC37FECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC00C1E1-8022-4535-9D1E-C1D3BC37FECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B487B422-02BB-4A85-A5E4-B540C856B86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B487B422-02BB-4A85-A5E4-B540C856B86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B487B422-02BB-4A85-A5E4-B540C856B86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B487B422-02BB-4A85-A5E4-B540C856B86D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82D05268-4375-4152-91E0-8CC450A0260B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82D05268-4375-4152-91E0-8CC450A0260B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82D05268-4375-4152-91E0-8CC450A0260B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82D05268-4375-4152-91E0-8CC450A0260B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E17DEF4-9C1C-4D6A-865E-8690A6D3D8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E17DEF4-9C1C-4D6A-865E-8690A6D3D8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E17DEF4-9C1C-4D6A-865E-8690A6D3D8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E17DEF4-9C1C-4D6A-865E-8690A6D3D8A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0A804D61-C82A-4005-AB00-C7FD4FE6F932} = {5798CE03-5B56-460D-BB96-01A5ADAF580B}
+		{FC00C1E1-8022-4535-9D1E-C1D3BC37FECC} = {A32A0EDF-C9CB-459A-84A3-F8504308FC62}
+		{B487B422-02BB-4A85-A5E4-B540C856B86D} = {F8313E9C-9E86-4F3B-8760-07217B092DF9}
+		{82D05268-4375-4152-91E0-8CC450A0260B} = {14677E8A-B78F-4535-9FDE-02D4ECC74ADE}
+		{8E17DEF4-9C1C-4D6A-865E-8690A6D3D8A4} = {F8313E9C-9E86-4F3B-8760-07217B092DF9}
+		{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0} = {F8313E9C-9E86-4F3B-8760-07217B092DF9}
+	EndGlobalSection
+EndGlobal
