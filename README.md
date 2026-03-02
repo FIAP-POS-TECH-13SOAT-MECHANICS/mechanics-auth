@@ -6,7 +6,7 @@ Este projeto consulta as tabelas do projeto **Fiap.Mechanics**, portanto, é nec
 
 ## Definição do ambiente
 
-- SDK: .NET 8.0
+- SDK: .NET 10.0
 - Banco de dados: MSSQL (via [Fiap.Mechanics](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat))
 - Provedor de Segredos: AWS Secrets Manager
 
@@ -14,20 +14,6 @@ Este projeto consulta as tabelas do projeto **Fiap.Mechanics**, portanto, é nec
 
 Para rodar o projeto localmente, é mandatório estar logado e configurado no AWS CLI para que a aplicação consiga recuperar as chaves de assinatura do JWT:
 
-```bash
+```powershell
 aws configure
 ```
-
-## Execução do projeto
-
-Certifique-se de que o banco de dados do projeto `Fiap.Mechanics` está ativo e com as migrations aplicadas.
-
-Inicie o projeto via CLI:
-
-```bash
-dotnet run --project src/Mechanics.Auth.Api
-```
-
-Após o processo concluir, o projeto estará disponível nas seguintes URLs:
-
-http://localhost:5001

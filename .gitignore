@@ -2,6 +2,7 @@ bin/
 obj/
 packages/
 dist/
+dist.zip
 TestResults/
 
 Thumbs.db

@@ -1,0 +1,9 @@
+{
+  "profile": "default",
+  "region": "us-east-1",
+  "configuration": "Release",
+  "s3-prefix": "Mechanics.Auth.Functions/",
+  "template": "serverless.template",
+  "template-parameters": "",
+  "docker-host-build-output-dir": "./bin/Release/lambda-publish"
+}
