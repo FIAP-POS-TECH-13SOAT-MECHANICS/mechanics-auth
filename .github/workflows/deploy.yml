@@ -1,0 +1,53 @@
+name: Push to S3 and Deploy to AWS Lambda
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: Deployment environment (dev|stg|prod)
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency:
+      group: deploy-${{ inputs.environment }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          cache: true
+          cache-dependency-path: |
+            src/**/packages.lock.json
+            tests/**/packages.lock.json
+          global-json-file: global.json
+
+      - name: Build
+        run: dotnet publish ./src/Mechanics.Auth.Api -c Release -r linux-x64 --no-self-contained -o ./dist
+
+      - name: Create deployment package
+        run: (cd dist && zip -r -9 ../dist.zip .)
+
+      - name: Set S3 Bucket Name
+        run: echo "BUCKET_NAME=fiap-mechanics-${{ inputs.environment }}-lambda-artifacts-$(aws sts get-caller-identity --query Account --output text)" >> $GITHUB_ENV
+
+      - name: Upload to S3
+        run: aws s3 cp dist.zip s3://${BUCKET_NAME}/auth/${{ github.sha }}.zip
+      
+      - name: Deploy to AWS Lambda
+        run: aws lambda update-function-code --function-name "fiap-mechanics-${{ inputs.environment }}-auth" --s3-bucket ${BUCKET_NAME} --s3-key auth/${{ github.sha }}.zip
