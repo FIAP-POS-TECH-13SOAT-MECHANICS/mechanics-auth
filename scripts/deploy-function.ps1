@@ -6,7 +6,7 @@ param (
 
 Write-Host Building...
 Remove-Item -Recurse .\dist\
-dotnet publish -c Release -r linux-x64 --no-self-contained -o dist
+dotnet publish .\src\Mechanics.Auth.Api -c Release -r linux-x64 --no-self-contained -o dist
 
 Write-Host Creating package...
 Compress-Archive -Path .\dist\* -DestinationPath .\dist.zip -Force
