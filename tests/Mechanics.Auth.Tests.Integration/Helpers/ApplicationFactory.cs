@@ -15,7 +15,6 @@ public class ApplicationFactory(ISecretProvider secretProvider) : WebApplication
 
         builder.ConfigureServices(services =>
         {
-            services.RemoveAll<IServiceProvider>();
             services.AddSingleton(secretProvider);
         });
     }

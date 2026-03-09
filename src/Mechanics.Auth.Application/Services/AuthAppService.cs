@@ -14,12 +14,17 @@ public class AuthAppService(ILogger<AuthAppService> logger, IUserRepository user
     public async Task<TokenResponse?> Login(LoginRequest request)
     {
         var normalizedCpf = new string(request.CpfNumber.Where(char.IsDigit).ToArray());
+        if (normalizedCpf.Length != 11)
+        {
+            logger.LogWarning("Invalid CPF format");
+            return null;
+        }
 
-        logger.LogTrace("Fetching user with CPF '{Cpf}'", normalizedCpf);
+        logger.LogTrace("Fetching user with CPF '{Cpf}'", normalizedCpf[..5]);
         var user = await userRepository.GetByCpf(normalizedCpf);
         if (user is null)
         {
-            logger.LogDebug("User with CPF '{Cpf}' not found", normalizedCpf);
+            logger.LogDebug("User with CPF '{Cpf}' not found", normalizedCpf[..5]);
             return null;
         }
 

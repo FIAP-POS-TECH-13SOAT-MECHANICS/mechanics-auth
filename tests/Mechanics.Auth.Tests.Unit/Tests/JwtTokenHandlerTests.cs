@@ -51,7 +51,7 @@ public class JwtTokenHandlerTests
     }
 
     [TestMethod("Deve retornar false para securityStamp inválido")]
-    public async Task It_ShouldReturnFalse_WhenValidateRefreshToken_WhitInvalidSecurityStamp()
+    public async Task It_ShouldReturnFalse_WhenValidateRefreshToken_WithInvalidSecurityStamp()
     {
         var user = UserMocks.CreateUser("bb4c7b7e-f65865670979", "iKCg6koUvMr");
         var handler = CreateInstance(TimeProvider.System);

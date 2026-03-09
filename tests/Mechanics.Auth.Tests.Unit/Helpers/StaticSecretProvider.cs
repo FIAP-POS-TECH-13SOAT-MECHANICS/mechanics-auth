@@ -9,5 +9,5 @@ public class StaticSecretProvider(RSA privateKey) : ISecretProvider
         Task.FromResult(privateKey);
 
     public Task<string> GetDbConnectionString() =>
-        Task.FromResult("Server=localhost;Database=fiap-mechanics;User Id=sa;Password=2%r6dZ6Xk@g3;TrustServerCertificate=True;");
+        Task.FromResult("Server=localhost;Database=fiap-mechanics;User Id=sa;Password=password;TrustServerCertificate=True;");
 }

@@ -38,7 +38,7 @@ public class AuthAppServiceTests
     }
 
     [TestMethod("Efetuar login com senha incorreta deve retornar null")]
-    public async Task It_ShouldReturnToken_WithInvalidCredentials()
+    public async Task It_ShouldReturnNull_WithInvalidCredentials()
     {
         var token = Guid.NewGuid().ToString();
         var tokenHandlerStub = CreateTokenHandlerStub(token);

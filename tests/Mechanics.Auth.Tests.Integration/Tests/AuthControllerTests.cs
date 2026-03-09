@@ -39,7 +39,7 @@ public class AuthControllerTests
 
 
     [TestMethod]
-    public async Task Login_WithMaskedPassword_ReturnsOk()
+    public async Task Login_WithMaskedCpf_ReturnsOk()
     {
         // Arrange
         var request = new LoginRequest
