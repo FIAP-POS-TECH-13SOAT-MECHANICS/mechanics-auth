@@ -15,16 +15,16 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
     <PackageReference Include="coverlet.collector" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
-    <PackageReference Include="Moq" Version="4.20.72"/>
-    <PackageReference Include="MSTest.TestAdapter" Version="3.10.4"/>
-    <PackageReference Include="MSTest.TestFramework" Version="3.10.4"/>
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.3" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mechanics.Auth.Application\Mechanics.Auth.Application.csproj" />
-    <ProjectReference Include="..\Mechanics.Auth.Infra.Data\Mechanics.Auth.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\src\Mechanics.Auth.Application\Mechanics.Auth.Application.csproj" />
+    <ProjectReference Include="..\..\src\Mechanics.Auth.Infra.Data\Mechanics.Auth.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

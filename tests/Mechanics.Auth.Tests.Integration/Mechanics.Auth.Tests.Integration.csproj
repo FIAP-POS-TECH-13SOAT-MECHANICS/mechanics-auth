@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mechanics.Auth.Api\Mechanics.Auth.Api.csproj" />
+    <ProjectReference Include="..\..\src\Mechanics.Auth.Api\Mechanics.Auth.Api.csproj" />
+    <ProjectReference Include="..\..\src\Mechanics.Auth.Application\Mechanics.Auth.Application.csproj" />
   </ItemGroup>
+
 </Project>
