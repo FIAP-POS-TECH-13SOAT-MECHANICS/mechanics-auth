@@ -25,6 +25,9 @@ public class JwtTokenHandler(
 
     public Guid? GetUserId(string token)
     {
+        if (!_tokenHandler.CanReadToken(token))
+            return null;
+
         var subject = _tokenHandler.ReadJsonWebToken(token).Subject;
         return Guid.TryParse(subject, out var userId) ? userId : null;
     }
