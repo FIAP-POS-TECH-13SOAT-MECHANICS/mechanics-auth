@@ -5,6 +5,7 @@ using Mechanics.Auth.Application.TokenGenerator;
 using Mechanics.Auth.Infra.Data.Models;
 using Mechanics.Auth.Infra.Data.Repositories;
 using Mechanics.Auth.Tests.Unit.Mocks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
 namespace Mechanics.Auth.Tests.Unit.Tests;
@@ -22,7 +23,7 @@ public class AuthAppServiceTests
         var tokenHandlerStub = CreateTokenHandlerStub(token);
         var user = UserMocks.CreateUser("12345678909", "TEST_5eCre+Key");
         var repository = CreateUserRepository(user);
-        var appService = new AuthAppService(repository.Object, tokenHandlerStub.Object);
+        var appService = new AuthAppService(NullLogger<AuthAppService>.Instance, repository.Object, tokenHandlerStub.Object);
         var request = new LoginRequest
         {
             CpfNumber = "12345678909",
@@ -43,7 +44,7 @@ public class AuthAppServiceTests
         var tokenHandlerStub = CreateTokenHandlerStub(token);
         var user = UserMocks.CreateUser("12345678909", "TEST_5eCre+Key");
         var repository = CreateUserRepository(user);
-        var appService = new AuthAppService(repository.Object, tokenHandlerStub.Object);
+        var appService = new AuthAppService(NullLogger<AuthAppService>.Instance, repository.Object, tokenHandlerStub.Object);
         var request = new LoginRequest
         {
             CpfNumber = "12345678909",
@@ -68,7 +69,7 @@ public class AuthAppServiceTests
         var refreshToken = Guid.NewGuid().ToString();
         var tokenHandlerStub = CreateTokenHandlerStub(token, refreshToken, userId.ToString(), userId);
         var repository = CreateUserRepository(user);
-        var appService = new AuthAppService(repository.Object, tokenHandlerStub.Object);
+        var appService = new AuthAppService(NullLogger<AuthAppService>.Instance, repository.Object, tokenHandlerStub.Object);
         var request = new RefreshTokenRequest { RefreshToken = refreshToken };
 
         var result = await appService.Refresh(request);
