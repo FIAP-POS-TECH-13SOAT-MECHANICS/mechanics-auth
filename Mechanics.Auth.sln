@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Infra.Data", "src\Mechanics.Auth.Infra.Data\Mechanics.Auth.Infra.Data.csproj", "{B487B422-02BB-4A85-A5E4-B540C856B86D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Tests.Unit", "src\Mechanics.Auth.Tests.Unit\Mechanics.Auth.Tests.Unit.csproj", "{82D05268-4375-4152-91E0-8CC450A0260B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Tests.Unit", "tests\Mechanics.Auth.Tests.Unit\Mechanics.Auth.Tests.Unit.csproj", "{82D05268-4375-4152-91E0-8CC450A0260B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Solution Items", "{77871038-2794-4094-B844-F2176E1001BD}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Infra.Secret
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Infra.CrossCutting.IoC", "src\Mechanics.Auth.Infra.CrossCutting.IoC\Mechanics.Auth.Infra.CrossCutting.IoC.csproj", "{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Tests.Integration", "src\Mechanics.Auth.Tests.Integration\Mechanics.Auth.Tests.Integration.csproj", "{E36E4641-421C-4B19-A745-7378D4F98E34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Tests.Integration", "tests\Mechanics.Auth.Tests.Integration\Mechanics.Auth.Tests.Integration.csproj", "{E36E4641-421C-4B19-A745-7378D4F98E34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Api", "src\Mechanics.Auth.Api\Mechanics.Auth.Api.csproj", "{2C817A5C-1A49-4075-828C-C97A61912BE1}"
 EndProject

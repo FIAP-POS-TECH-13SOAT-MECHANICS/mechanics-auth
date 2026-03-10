@@ -1,19 +1,45 @@
+using Mechanics.Auth.Api.Extensions;
 using Mechanics.Auth.Infra.CrossCutting.IoC.Extensions;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using System.Diagnostics.CodeAnalysis;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Mechanics.Auth.Api;
 
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+public class Program
+{
+    [ExcludeFromCodeCoverage]
+    protected Program()
+    {
+    }
 
-builder.Services.AddDataRepositories()
-    .AddAppServices(builder.Configuration)
-    .AddSecretProvider(builder.Configuration);
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+        builder.Services.AddControllers(options =>
+            options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer())));
 
-app.MapControllers();
+        builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
-app.MapGet("/", () => "Welcome to running ASP.NET Core Minimal API on AWS Lambda");
+        builder.Services.AddDataRepositories()
+            .AddAppServices(builder.Configuration)
+            .AddSecretProvider(builder.Configuration);
 
-app.Run();
+        builder.Services.AddGlobalCorsPolicy();
+
+#if DEBUG
+        builder.Services.AddSwaggerDocumentation();
+#endif
+
+        var app = builder.Build();
+
+        app.UseCors("AllowAllOrigins");
+        app.MapControllers();
+
+#if DEBUG
+        app.UseSwaggerDocumentation();
+#endif
+
+        app.Run();
+    }
+}

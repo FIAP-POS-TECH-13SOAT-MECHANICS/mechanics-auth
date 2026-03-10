@@ -19,6 +19,10 @@ permissions:
   checks: write
 
 jobs:
+  tests:
+    name: Run tests
+    uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/workflows/dotnet-tests.yml@main
+  
   resolve-environment:
     name: Resolve environment name
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
@@ -27,7 +31,7 @@ jobs:
       environment: ${{ steps.resolve.outputs.environment }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
       - name: Resolve Environment
         id: resolve
         uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/actions/resolve-environment@main
@@ -35,8 +39,11 @@ jobs:
   deploy:
     name: Deploy on AWS Lambda
     needs:
+      - tests
       - resolve-environment
-    uses: ./.github/workflows/deploy.yml
+    uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/workflows/deploy-lambda.yml@main
     with:
       environment: ${{ needs.resolve-environment.outputs.environment }}
+      project_path: ./src/Mechanics.Auth.Api
+      function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth
     secrets: inherit
