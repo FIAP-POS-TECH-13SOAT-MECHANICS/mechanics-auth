@@ -21,7 +21,7 @@ permissions:
 jobs:
   tests:
     name: Run tests
-    uses: ./.github/workflows/tests.yml
+    uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/workflows/dotnet-tests.yml@main
   
   resolve-environment:
     name: Resolve environment name
@@ -41,7 +41,9 @@ jobs:
     needs:
       - tests
       - resolve-environment
-    uses: ./.github/workflows/deploy.yml
+    uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/workflows/deploy-lambda.yml@main
     with:
       environment: ${{ needs.resolve-environment.outputs.environment }}
+      project_path: ./src/Mechanics.Auth.Api
+      function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth
     secrets: inherit
