@@ -22,7 +22,7 @@ jobs:
   tests:
     name: Run tests
     uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/workflows/dotnet-tests.yml@main
-  
+
   resolve-environment:
     name: Resolve environment name
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
@@ -45,5 +45,5 @@ jobs:
     with:
       environment: ${{ needs.resolve-environment.outputs.environment }}
       project_path: ./src/Mechanics.Auth.Api
-      function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth
+      function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth-token
     secrets: inherit
