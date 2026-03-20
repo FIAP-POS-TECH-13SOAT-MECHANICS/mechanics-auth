@@ -17,4 +17,6 @@ $tag = New-Guid
 aws s3 cp .\dist.zip s3://$bucketName/auth/$tag.zip
 
 Write-Host Updating function...
-aws lambda update-function-code --function-name "fiap-mechanics-$environment-auth" --s3-bucket $bucketName --s3-key auth/$tag.zip | Out-Null
+aws lambda update-function-code --function-name "fiap-mechanics-$environment-auth-token" --s3-bucket $bucketName --s3-key auth/$tag.zip | Out-Null
+
+Write-Host -ForegroundColor Green Lambda function deployed.
