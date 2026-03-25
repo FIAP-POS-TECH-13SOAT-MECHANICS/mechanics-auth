@@ -95,3 +95,8 @@ Os seguintes logins podem ser utilizados para testes:
 
 Qualquer funcionário autenticado pode criar e atualizar ordens de serviço.
 Para mais detalhes, consulte [Autenticação e autorização](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat/blob/main/docs/auth.md).
+
+
+## Diagrama desse projeto
+
+![Infraestructure](./images/lambda.png)
