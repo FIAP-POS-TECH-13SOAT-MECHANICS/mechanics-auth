@@ -45,10 +45,10 @@ aws apigatewayv2 get-apis --query "Items[?Name=='fiap-mechanics-dev-api'].ApiEnd
 
 ## Endpoints disponíveis
 
-Para realizar login, utilize o endpoint `POST /api/auth/login`.
+Para realizar login, utilize o endpoint `POST /auth/login`.
 
 ```shell
-curl --location 'http://localhost:5050/api/auth/login' \
+curl --location 'http://localhost:5050/auth/login' \
 --header 'Content-Type: application/json' \
 --data '{
     "cpfNumber": "12345678909",
@@ -67,10 +67,10 @@ O token de acesso possui uma validade de poucos minutos e pode ser renovado util
 }
 ```
 
-Para renovar o token de acesso, utilize o endpoint `POST /api/auth/refresh-token`.
+Para renovar o token de acesso, utilize o endpoint `POST /auth/refresh`.
 
 ```shell
-curl --location 'http://localhost:5050/api/auth/refresh' \
+curl --location 'http://localhost:5050/auth/refresh' \
 --header 'accept: application/json' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -82,7 +82,7 @@ O token de atualização é válido por 12 horas e é cancelado quando o usuári
 
 ## Usuários padrão
 
-Utilize o endpoint `/api/auth/login` para gerar um token.
+Utilize o endpoint `/auth/login` para gerar um token.
 O token possui validade de poucos minutos, mas pode ser renovado.
 
 Os seguintes logins podem ser utilizados para testes:

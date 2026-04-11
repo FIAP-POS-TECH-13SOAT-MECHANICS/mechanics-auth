@@ -27,7 +27,7 @@ public class AuthControllerTests
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/auth/login", request, TestContext.CancellationTokenSource.Token);
+        var response = await _client.PostAsJsonAsync("auth/login", request, TestContext.CancellationTokenSource.Token);
 
         // Assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -49,7 +49,7 @@ public class AuthControllerTests
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/auth/login", request, TestContext.CancellationTokenSource.Token);
+        var response = await _client.PostAsJsonAsync("auth/login", request, TestContext.CancellationTokenSource.Token);
 
         // Assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -70,7 +70,7 @@ public class AuthControllerTests
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/auth/login", request, TestContext.CancellationTokenSource.Token);
+        var response = await _client.PostAsJsonAsync("auth/login", request, TestContext.CancellationTokenSource.Token);
 
         // Assert
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -87,7 +87,7 @@ public class AuthControllerTests
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/auth/login", request, TestContext.CancellationTokenSource.Token);
+        var response = await _client.PostAsJsonAsync("auth/login", request, TestContext.CancellationTokenSource.Token);
 
         // Assert
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -104,7 +104,7 @@ public class AuthControllerTests
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/auth/login", request, TestContext.CancellationTokenSource.Token);
+        var response = await _client.PostAsJsonAsync("auth/login", request, TestContext.CancellationTokenSource.Token);
 
         // Assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -134,7 +134,7 @@ public class AuthControllerTests
             Password = "5eCre+Key",
         };
         var loginResponse =
-            await _client.PostAsJsonAsync("api/auth/login", loginRequest, TestContext.CancellationTokenSource.Token);
+            await _client.PostAsJsonAsync("auth/login", loginRequest, TestContext.CancellationTokenSource.Token);
         var loginData = await loginResponse.Content.ReadFromJsonAsync<TokenResponse>(TestContext.CancellationTokenSource.Token);
 
         var refreshRequest = new RefreshTokenRequest
@@ -143,7 +143,7 @@ public class AuthControllerTests
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/auth/refresh", refreshRequest, TestContext.CancellationTokenSource.Token);
+        var response = await _client.PostAsJsonAsync("auth/refresh", refreshRequest, TestContext.CancellationTokenSource.Token);
 
         // Assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -163,7 +163,7 @@ public class AuthControllerTests
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/auth/refresh", request, TestContext.CancellationTokenSource.Token);
+        var response = await _client.PostAsJsonAsync("auth/refresh", request, TestContext.CancellationTokenSource.Token);
 
         // Assert
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
