@@ -7,7 +7,7 @@ using System.Net;
 namespace Mechanics.Auth.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]/[action]")]
+[Route("[controller]/[action]")]
 public class AuthController(AuthAppService service) : ControllerBase
 {
     /// <summary>
