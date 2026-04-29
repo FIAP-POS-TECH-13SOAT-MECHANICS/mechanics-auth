@@ -80,6 +80,18 @@ curl --location 'http://localhost:5050/auth/refresh' \
 
 O token de atualização é válido por 12 horas e é cancelado quando o usuário altera a senha.
 
+Para gerar um token para comunicação entre serviços, utilize o endpoint `POST /auth/servicetoken`.
+
+```shell
+curl --location 'http://localhost:5050/auth/service-token' \
+--header 'Content-Type: application/json' \
+--data '{
+    "serviceName": "nome-do-servico"
+}'
+```
+
+A resposta contém apenas o token de acesso com a Role `SERVICE`.
+
 ## Usuários padrão
 
 Utilize o endpoint `/auth/login` para gerar um token.
@@ -96,6 +108,21 @@ Os seguintes logins podem ser utilizados para testes:
 Qualquer funcionário autenticado pode criar e atualizar ordens de serviço.
 Para mais detalhes, consulte [Autenticação e autorização](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat/blob/main/docs/auth.md).
 
+## Token para serviços
+
+Este endpoint é destinado à comunicação entre microserviços.
+Diferente do login de usuários, ele gera um token com a Role `SERVICE`, que permite que um serviço se identifique para
+outro dentro do ecossistema.
+
+```shell
+curl --location 'http://localhost:5050/auth/service-token' \
+--header 'Content-Type: application/json' \
+--data '{
+    "serviceName": "Mechanics.Orders"
+}'
+```
+
+O token retornado possui uma validade curta e não gera um `refreshToken`.
 
 ## Diagrama desse projeto
 

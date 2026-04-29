@@ -51,4 +51,7 @@ public class AuthAppService(ILogger<AuthAppService> logger, IUserRepository user
         logger.LogTrace("Access token for user '{Id}' was refreshed", userId);
         return await tokenHandler.CreateTokenResponse(user);
     }
+
+    public async Task<TokenResponse?> ServiceToken(string serviceName) =>
+        await tokenHandler.CreateTokenResponse(serviceName);
 }

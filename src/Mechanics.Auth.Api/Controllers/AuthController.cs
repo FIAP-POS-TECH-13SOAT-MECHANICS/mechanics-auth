@@ -43,4 +43,20 @@ public class AuthController(AuthAppService service) : ControllerBase
         var result = await service.Refresh(request);
         return result is not null ? Ok(result) : Unauthorized();
     }
+
+    /// <summary>
+    ///     Gera um token JWT para consumo entre serviços.
+    /// </summary>
+    /// <returns>Um <see cref="TokenResponse"/> contendo o token JWT.</returns>
+    /// <response code="200">Token de serviço gerado com sucesso.</response>
+    [HttpPost]
+    [Consumes(typeof(ServiceTokenRequest), "application/json")]
+    [Produces("application/json", Type = typeof(TokenResponse))]
+    [ProducesResponseType(typeof(TokenResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> ServiceToken(ServiceTokenRequest request)
+    {
+        var result = await service.ServiceToken(request.ServiceName);
+        return result is not null ? Ok(result) : Unauthorized();
+    }
 }

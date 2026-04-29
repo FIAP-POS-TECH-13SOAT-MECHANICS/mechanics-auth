@@ -8,4 +8,5 @@ public interface IJwtTokenHandler
     Guid? GetUserId(string token);
     Task<bool> ValidateRefreshToken(string refreshToken, string securityStamp);
     Task<TokenResponse> CreateTokenResponse(UserModel user);
+    Task<TokenResponse?> CreateTokenResponse(string serviceName);
 }
