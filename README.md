@@ -83,7 +83,7 @@ O token de atualização é válido por 12 horas e é cancelado quando o usuári
 Para gerar um token para comunicação entre serviços, utilize o endpoint `POST /auth/servicetoken`.
 
 ```shell
-curl --location 'http://localhost:5050/auth/servicetoken' \
+curl --location 'http://localhost:5050/auth/service-token' \
 --header 'Content-Type: application/json' \
 --data '{
     "serviceName": "nome-do-servico"
@@ -115,7 +115,7 @@ Diferente do login de usuários, ele gera um token com a Role `SERVICE`, que per
 outro dentro do ecossistema.
 
 ```shell
-curl --location 'http://localhost:5050/auth/servicetoken' \
+curl --location 'http://localhost:5050/auth/service-token' \
 --header 'Content-Type: application/json' \
 --data '{
     "serviceName": "Mechanics.Orders"

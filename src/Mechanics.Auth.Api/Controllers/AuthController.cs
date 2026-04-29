@@ -44,6 +44,11 @@ public class AuthController(AuthAppService service) : ControllerBase
         return result is not null ? Ok(result) : Unauthorized();
     }
 
+    /// <summary>
+    ///     Gera um token JWT para consumo entre serviços.
+    /// </summary>
+    /// <returns>Um <see cref="TokenResponse"/> contendo o token JWT.</returns>
+    /// <response code="200">Token de serviço gerado com sucesso.</response>
     [HttpPost]
     [Consumes(typeof(ServiceTokenRequest), "application/json")]
     [Produces("application/json", Type = typeof(TokenResponse))]
