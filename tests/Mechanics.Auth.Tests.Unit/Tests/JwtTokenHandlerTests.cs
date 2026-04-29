@@ -74,12 +74,45 @@ public class JwtTokenHandlerTests
         Assert.IsFalse(isValid);
     }
 
+    [TestMethod("Deve retornar ID do serviço informado")]
+    public async Task It_ShouldReturnServiceId_WhenServiceExists()
+    {
+        const string serviceName = "identity";
+        var expectedServiceId = new Guid("b1d6e95e-ca51-4226-bfb8-97343dca1842");
+        var handler = CreateInstance(TimeProvider.System);
+
+        var response = await handler.CreateTokenResponse(serviceName);
+        var serviceId = handler.GetUserId(response!.AccessToken);
+
+        Assert.IsNotNull(response);
+        Assert.AreEqual(expectedServiceId, serviceId);
+    }
+
+    [TestMethod("Deve retornar ID default para serviço não encontrado")]
+    public async Task It_ShouldReturnDefaultId_WhenServiceDoesNotExist()
+    {
+        const string serviceName = "unknown-service";
+        var expectedDefaultId = new Guid("f8248436-6652-47f0-ac78-218aa71fc681");
+        var handler = CreateInstance(TimeProvider.System);
+
+        var response = await handler.CreateTokenResponse(serviceName);
+        var serviceId = handler.GetUserId(response!.AccessToken);
+
+        Assert.IsNotNull(response);
+        Assert.AreEqual(expectedDefaultId, serviceId);
+    }
+
     private static JwtTokenHandler CreateInstance(TimeProvider timeProvider)
     {
         var options = new OptionsWrapper<JwtOptions>(new JwtOptions
         {
             AccessTokenLifetime = 10,
             RefreshTokenLifetime = 120,
+            ServiceIds = new Dictionary<string, Guid>
+            {
+                { "identity", new Guid("b1d6e95e-ca51-4226-bfb8-97343dca1842") },
+                { "default", new Guid("f8248436-6652-47f0-ac78-218aa71fc681") },
+            },
         });
 
         var rsa = RSA.Create();

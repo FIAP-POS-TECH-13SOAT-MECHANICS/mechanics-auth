@@ -45,6 +45,38 @@ public class JwtTokenHandler(
         };
     }
 
+    public async Task<TokenResponse?> CreateTokenResponse(string serviceName)
+    {
+        var expiration = timeProvider.GetUtcNow().AddMinutes(_options.AccessTokenLifetime);
+        var serviceId = _options.ServiceIds.TryGetValue(serviceName, out var id) ? id : _options.ServiceIds["default"];
+
+        var claims = new List<Claim>
+        {
+            new("sub", serviceId.ToString()),
+            new("customerId", Guid.Empty.ToString()),
+            new("role", "SERVICE"), // TODO criar role para serviços
+        };
+
+        var privateKey = await secretProvider.GetPrivateKey();
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Issuer = JwtTokenIssuer,
+            Subject = new ClaimsIdentity(claims),
+            Expires = expiration.UtcDateTime,
+            SigningCredentials = new SigningCredentials(new RsaSecurityKey(privateKey), SecurityAlgorithms.RsaSha256),
+            IssuedAt = timeProvider.GetUtcNow().UtcDateTime,
+            NotBefore = timeProvider.GetUtcNow().UtcDateTime,
+        };
+
+        return new TokenResponse
+        {
+            AccessToken = _tokenHandler.CreateToken(tokenDescriptor),
+            RefreshToken = string.Empty,
+            ExpiresIn = (int)expiration.Subtract(timeProvider.GetUtcNow()).TotalSeconds,
+            ExpirationDate = expiration,
+        };
+    }
+
     public async Task<bool> ValidateRefreshToken(string refreshToken, string securityStamp)
     {
         if (!_tokenHandler.CanReadToken(refreshToken))

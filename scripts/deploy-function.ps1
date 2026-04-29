@@ -18,5 +18,7 @@ aws s3 cp .\dist.zip s3://$bucketName/auth/$tag.zip
 
 Write-Host Updating function...
 aws lambda update-function-code --function-name "fiap-mechanics-$environment-auth-token" --s3-bucket $bucketName --s3-key auth/$tag.zip | Out-Null
+aws lambda wait function-updated --function-name "fiap-mechanics-$environment-auth-token"
+aws lambda publish-version --function-name "fiap-mechanics-$environment-auth-token" | Out-Null
 
 Write-Host -ForegroundColor Green Lambda function deployed.
