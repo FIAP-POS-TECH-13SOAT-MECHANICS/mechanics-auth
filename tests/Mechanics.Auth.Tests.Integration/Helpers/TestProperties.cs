@@ -1,5 +1,5 @@
-﻿using System.Security.Cryptography;
-using Testcontainers.MsSql;
+﻿using DotNet.Testcontainers.Containers;
+using System.Security.Cryptography;
 
 namespace Mechanics.Auth.Tests.Integration.Helpers;
 
@@ -7,7 +7,7 @@ namespace Mechanics.Auth.Tests.Integration.Helpers;
 public static class TestProperties
 {
     public static ApplicationFactory Factory { get; private set; } = null!;
-    private static MsSqlContainer _msSqlContainer = null!;
+    private static IContainer _awsClientContainer = null!;
 
     [AssemblyInitialize]
     public static async Task Setup(TestContext context)
@@ -15,27 +15,27 @@ public static class TestProperties
         Environment.SetEnvironmentVariable("JwtOptions__AccessTokenLifetime", "60");
 
         var rsa = RSA.Create();
-        var connectionString = await CreateDatabaseContainer(context.CancellationTokenSource.Token);
-        var secretProvider = new StaticSecretProvider(rsa, connectionString);
+        var secretProvider = new StaticSecretProvider(rsa);
+
+        await SetupAwsClient(context);
 
         Factory = new ApplicationFactory(secretProvider);
     }
 
-    private static async Task<string> CreateDatabaseContainer(CancellationToken cancellationToken)
+    private static async Task SetupAwsClient(TestContext context)
     {
-        var testDatabaseContainer = new TestDatabaseContainer();
-        _msSqlContainer = testDatabaseContainer.Container;
-        await _msSqlContainer.StartAsync(cancellationToken);
+        _awsClientContainer = new TestAwsClientContainer().Container;
+        await _awsClientContainer.StartAsync(context.CancellationTokenSource.Token);
 
-        await testDatabaseContainer.SeedDatabase(cancellationToken);
-
-        return _msSqlContainer.GetConnectionString();
+        Environment.SetEnvironmentVariable("AwsCredentialsOptions__UseLocalstack", "true");
+        var localstackUrl = $"http://localhost:{_awsClientContainer.GetMappedPublicPort(4566)}";
+        Environment.SetEnvironmentVariable("AwsCredentialsOptions__LocalstackUrl", localstackUrl);
     }
 
     [AssemblyCleanup]
     public static async Task Cleanup()
     {
         await Factory.DisposeAsync();
-        await _msSqlContainer.DisposeAsync();
+        await _awsClientContainer.DisposeAsync();
     }
 }

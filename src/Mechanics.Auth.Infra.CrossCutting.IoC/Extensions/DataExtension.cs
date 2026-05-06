@@ -1,18 +1,38 @@
-﻿using Mechanics.Auth.Infra.Data.CachedRepository;
-using Mechanics.Auth.Infra.Data.Connection;
+﻿using Amazon;
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.Runtime;
+using Mechanics.Auth.Infra.Data.Options;
 using Mechanics.Auth.Infra.Data.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Mechanics.Auth.Infra.CrossCutting.IoC.Extensions;
 
 public static class DataExtension
 {
-    public static IServiceCollection AddDataRepositories(this IServiceCollection services)
+    public static IServiceCollection AddDataRepositories(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IDbConnectionFactory, SqlServerDbConnectionFactory>();
+        services.AddSingleton<IAmazonDynamoDB>(_ =>
+        {
+            var options = configuration.GetSection("AwsCredentials").Get<AwsCredentialsOptions>()!;
+
+            if (options.UseLocalstack)
+                return new AmazonDynamoDBClient(
+                    new BasicAWSCredentials("local", "empty-key"),
+                    new AmazonDynamoDBConfig
+                    {
+                        RegionEndpoint = RegionEndpoint.GetBySystemName(options.Region),
+                        ServiceURL = options.LocalstackUrl,
+                    });
+
+            return new AmazonDynamoDBClient(new AmazonDynamoDBConfig());
+        });
+
+        services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
+        services.Configure<TableNames>(configuration.GetSection(nameof(TableNames)));
 
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddSingleton<IRolesCachedRepository, RolesCachedRepository>();
 
         return services;
     }

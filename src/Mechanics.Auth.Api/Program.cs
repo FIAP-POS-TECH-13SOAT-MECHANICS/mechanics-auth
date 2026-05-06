@@ -21,7 +21,7 @@ public class Program
 
         builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
-        builder.Services.AddDataRepositories()
+        builder.Services.AddDataRepositories(builder.Configuration)
             .AddAppServices(builder.Configuration)
             .AddSecretProvider(builder.Configuration);
 

@@ -3,7 +3,6 @@ using Mechanics.Auth.Infra.SecretProvider;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Mechanics.Auth.Tests.Integration.Helpers;
 

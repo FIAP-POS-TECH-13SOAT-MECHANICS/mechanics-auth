@@ -5,17 +5,13 @@ namespace Mechanics.Auth.Tests.Unit.Mocks;
 
 public static class UserMocks
 {
-    private static readonly Dictionary<string, RoleModel> Roles = RoleMocks.Roles.ToDictionary(role => role.Name);
-
     public static UserModel CreateUser(Guid userId, string cpf, string roleName)
     {
-        var role = Roles[roleName];
-
         return new UserModel
         {
             Id = userId,
             CpfNumber = cpf,
-            RoleId = role.Id,
+            Role = roleName,
             PasswordHash = "",
             SecurityStamp = userId.ToString(),
             CustomerId = Guid.NewGuid(),
@@ -28,7 +24,7 @@ public static class UserMocks
         {
             Id = Guid.NewGuid(),
             CpfNumber = userName,
-            RoleId = Roles[RoleMocks.Names.Administrator].Id,
+            Role = RoleNames.Administrator,
             PasswordHash = "",
             SecurityStamp = userName,
             CustomerId = Guid.NewGuid(),

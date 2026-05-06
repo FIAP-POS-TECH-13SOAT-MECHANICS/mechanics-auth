@@ -15,8 +15,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
     <PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
-    <PackageReference Include="Testcontainers" Version="4.7.0" />
-    <PackageReference Include="Testcontainers.MsSql" Version="4.7.0" />
+    <PackageReference Include="Testcontainers" Version="4.11.0" />
+    <PackageReference Include="Testcontainers.LocalStack" Version="4.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.0.0" />
   </ItemGroup>
@@ -24,6 +24,25 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Mechanics.Auth.Api\Mechanics.Auth.Api.csproj" />
     <ProjectReference Include="..\..\src\Mechanics.Auth.Application\Mechanics.Auth.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\scripts\localstack\*.sh">
+      <Link>scripts/localstack/%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </None>
+    <None Include="..\..\seeds\*.json">
+      <Link>seeds/%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\seeds\README.md">
+      <Link>seeds\README.md</Link>
+    </Content>
   </ItemGroup>
 
 </Project>

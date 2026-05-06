@@ -28,8 +28,6 @@ public class AwsSecretProvider(
         return _privateKey;
     }
 
-    public async Task<string> GetDbConnectionString() => await GetValueFromSecret(options.Value.DbSecretName);
-
     private async Task<string> GetValueFromSecret(string secretName)
     {
         logger.LogInformation("Fetching value from Secrets Manager using name '{SecretName}'", secretName);

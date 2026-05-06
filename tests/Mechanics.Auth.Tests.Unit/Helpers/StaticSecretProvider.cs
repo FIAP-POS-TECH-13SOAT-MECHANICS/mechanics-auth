@@ -5,9 +5,5 @@ namespace Mechanics.Auth.Tests.Unit.Helpers;
 
 public class StaticSecretProvider(RSA privateKey) : ISecretProvider
 {
-    public Task<RSA> GetPrivateKey() =>
-        Task.FromResult(privateKey);
-
-    public Task<string> GetDbConnectionString() =>
-        Task.FromResult("Server=localhost;Database=fiap-mechanics;User Id=sa;Password=password;TrustServerCertificate=True;");
+    public Task<RSA> GetPrivateKey() => Task.FromResult(privateKey);
 }

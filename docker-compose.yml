@@ -1,0 +1,23 @@
+﻿name: mechanics-auth
+
+services:
+  localstack:
+    image: localstack/localstack:3
+    environment:
+      - SERVICES=dynamodb
+      - DYNAMODB_SHARE_DB=1
+      - DYNAMODB_IN_MEMORY=1
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./scripts/localstack:/etc/localstack/init/ready.d:ro
+      - ./seeds:/seeds:ro
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      DYNAMO_ENDPOINT: http://localstack:4566
+    depends_on:
+      - localstack

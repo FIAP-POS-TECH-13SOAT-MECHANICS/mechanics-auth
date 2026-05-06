@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Sol
 		README.md = README.md
 		.editorconfig = .editorconfig
 		global.json = global.json
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Api Layer", "1. Api Layer", "{5798CE03-5B56-460D-BB96-01A5ADAF580B}"

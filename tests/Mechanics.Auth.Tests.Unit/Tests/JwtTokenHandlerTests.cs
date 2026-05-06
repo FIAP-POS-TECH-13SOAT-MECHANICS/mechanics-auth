@@ -118,6 +118,6 @@ public class JwtTokenHandlerTests
         var rsa = RSA.Create();
         var secretProvider = new StaticSecretProvider(rsa);
 
-        return new JwtTokenHandler(options, timeProvider, secretProvider, new StaticRolesRepository());
+        return new JwtTokenHandler(options, timeProvider, secretProvider);
     }
 }
