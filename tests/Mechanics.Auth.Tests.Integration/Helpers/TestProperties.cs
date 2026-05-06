@@ -27,9 +27,9 @@ public static class TestProperties
         _awsClientContainer = new TestAwsClientContainer().Container;
         await _awsClientContainer.StartAsync(context.CancellationTokenSource.Token);
 
-        Environment.SetEnvironmentVariable("AwsCredentialsOptions__UseLocalstack", "true");
+        Environment.SetEnvironmentVariable("AwsCredentials__UseLocalstack", "true");
         var localstackUrl = $"http://localhost:{_awsClientContainer.GetMappedPublicPort(4566)}";
-        Environment.SetEnvironmentVariable("AwsCredentialsOptions__LocalstackUrl", localstackUrl);
+        Environment.SetEnvironmentVariable("AwsCredentials__LocalstackUrl", localstackUrl);
     }
 
     [AssemblyCleanup]
