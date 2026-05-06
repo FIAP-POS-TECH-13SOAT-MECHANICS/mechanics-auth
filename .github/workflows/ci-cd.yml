@@ -52,6 +52,7 @@ jobs:
     name: Seed DynamoDB
     needs:
       - resolve-environment
+      - deploy
     uses: ./.github/workflows/seed.yml
     with:
       environment: ${{ needs.resolve-environment.outputs.environment }}

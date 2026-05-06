@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     concurrency:
-      group: deploy-${{ inputs.environment }}
+      group: seed-${{ inputs.environment }}
       cancel-in-progress: true
 
     steps:
@@ -40,7 +40,7 @@ jobs:
       - name: Run seeders
         env:
           ENVIRONMENT: ${{ inputs.environment }}
-          SEEDS_PATH: ${{ inputs.seeders_path }}
+          SEEDS_PATH: ${{ inputs.seeds_path }}
           SERVICE_NAME: ${{ inputs.service_name }}
         run: |
           shopt -s nullglob
