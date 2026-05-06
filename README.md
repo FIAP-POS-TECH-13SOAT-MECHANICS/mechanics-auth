@@ -7,7 +7,7 @@ Este projeto consulta as tabelas do projeto **Fiap.Mechanics**, portanto, é nec
 ## Definição do ambiente
 
 - SDK: .NET 10.0
-- Banco de dados: MSSQL (via [Fiap.Mechanics](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat))
+- Banco de dados: DynamoDB (via [Fiap.Mechanics](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat))
 - Provedor de Segredos: AWS Secrets Manager
 
 ## Pré-requisitos
@@ -18,8 +18,8 @@ Para rodar o projeto localmente, é mandatório estar logado e configurado no AW
 aws configure
 ```
 
-A aplicação pode ser executada normalmente como qualquer API .Net, mas é necessário que o banco de dados esteja populado e as secrets existam.
-Execute o script de inicilização disponível no [repositório de Infra](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra) e faça deplot da [aplicação principal](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat) para criar esses recursos.
+Execute os scripts do [repositório de infraestrutura](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra) e do [repositório de banco de dados](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-database) para provisionar o ambiente antes de executar a aplicação.
+
 O comando abaixo inicia a API na porta 5050. Utilize uma aplicação como [Postman](https://www.postman.com/downloads) para testar.
 
 ```powershell
@@ -29,7 +29,7 @@ dotnet run --project .\src\Mechanics.Auth.Api
 ## Script de deploy
 
 Execute o script Powershell para fazer deploy da aplicação na AWS.
-Certifique-se de antes ter provisionado o ambiente usando os scripts do repo de infra.
+Certifique-se de antes ter provisionado o ambiente usando os scripts do [repositório de infraestrutura](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra).
 
 ```powershell
 .\scripts\deploy-function dev
@@ -80,18 +80,6 @@ curl --location 'http://localhost:5050/auth/refresh' \
 
 O token de atualização é válido por 12 horas e é cancelado quando o usuário altera a senha.
 
-Para gerar um token para comunicação entre serviços, utilize o endpoint `POST /auth/servicetoken`.
-
-```shell
-curl --location 'http://localhost:5050/auth/service-token' \
---header 'Content-Type: application/json' \
---data '{
-    "serviceName": "nome-do-servico"
-}'
-```
-
-A resposta contém apenas o token de acesso com a Role `SERVICE`.
-
 ## Usuários padrão
 
 Utilize o endpoint `/auth/login` para gerar um token.
@@ -104,6 +92,8 @@ Os seguintes logins podem ser utilizados para testes:
 | `12345678909` | `5eCre+Key` | Administrador | Acesso completo ao sistema    |
 | `98765432100` | `5eCre+Key` | Atendente     | Cadastrar clientes e veículos |
 | `11144477735` | `5eCre+Key` | Mecânico      | Gerenciar produtos e serviços |
+
+Os dados acima estão disponíveis nos seeds do DynamoDB. Consulte [Seeds](./seeds/README.md) para mais detalhes.
 
 Qualquer funcionário autenticado pode criar e atualizar ordens de serviço.
 Para mais detalhes, consulte [Autenticação e autorização](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat/blob/main/docs/auth.md).
@@ -123,6 +113,7 @@ curl --location 'http://localhost:5050/auth/service-token' \
 ```
 
 O token retornado possui uma validade curta e não gera um `refreshToken`.
+Para mais informações, consulte [Integração entre microsserviços](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat/blob/main/docs/integration.md).
 
 ## Diagrama desse projeto
 
