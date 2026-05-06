@@ -3,5 +3,4 @@
 public class SecretProviderOptions
 {
     public required string PrivateKeySecretName { get; init; }
-    public required string DbSecretName { get; init; }
 }

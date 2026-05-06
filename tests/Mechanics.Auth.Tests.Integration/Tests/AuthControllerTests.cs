@@ -96,17 +96,14 @@ public class AuthControllerTests
     [TestMethod]
     public async Task Login_ForCustomerUser_MustContainsCustomerId()
     {
-        // Arrange
         var request = new LoginRequest
         {
             CpfNumber = "90526359005",
             Password = "5eCre+Key",
         };
 
-        // Act
         var response = await _client.PostAsJsonAsync("auth/login", request, TestContext.CancellationTokenSource.Token);
 
-        // Assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         var tokenResponse = await response.Content.ReadFromJsonAsync<TokenResponse>(TestContext.CancellationTokenSource.Token);
         Assert.IsNotNull(tokenResponse);

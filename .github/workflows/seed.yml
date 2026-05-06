@@ -1,0 +1,80 @@
+﻿name: Seed DynamoDB
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: Deployment environment (dev|stg|prod)
+        required: true
+        type: string
+      seeds_path:
+        description: Path to seeders directory
+        required: true
+        type: string
+      service_name:
+        description: Name of the service being seeded
+        required: true
+        type: string
+
+jobs:
+  seed:
+    name: Seed DynamoDB
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency:
+      group: seed-${{ inputs.environment }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Run seeders
+        env:
+          ENVIRONMENT: ${{ inputs.environment }}
+          SEEDS_PATH: ${{ inputs.seeds_path }}
+          SERVICE_NAME: ${{ inputs.service_name }}
+        run: |
+          shopt -s nullglob
+          seed_files=("$SEEDS_PATH"/*.json)
+
+          if [ ${#seed_files[@]} -eq 0 ]; then
+            echo "No seed files found in '$SEEDS_PATH', skipping."
+            exit 0
+          fi
+
+          for seed_file in "${seed_files[@]}"; do
+            if [[ "$seed_file" == *-test.json ]]; then
+              echo "Skipping test seed file: $seed_file"
+              continue
+            fi
+
+            table=$(basename "$seed_file" .json)
+            full_table_name="${SERVICE_NAME}-${ENVIRONMENT}-${table}"
+
+            if ! aws dynamodb describe-table --table-name "$full_table_name" > /dev/null 2>&1; then
+              echo "::warning::Table '$full_table_name' does not exist, skipping."
+              continue
+            fi
+
+            echo "Seeding table '$full_table_name'..."
+            jq -c '.[]' "$seed_file" | while read -r item; do
+              id=$(echo "$item" | jq -r '.id')
+              dynamo_item=$(echo "$item" | jq -c 'to_entries | map({(.key): {S: .value}}) | add')
+
+              aws dynamodb put-item \
+                --table-name "$full_table_name" \
+                --condition-expression "attribute_not_exists(id)" \
+                --item "$dynamo_item" > /dev/null 2>&1 \
+                && echo "  Item '$id' seeded." \
+                || echo "  Item '$id' already exists, skipping."
+            done
+          done

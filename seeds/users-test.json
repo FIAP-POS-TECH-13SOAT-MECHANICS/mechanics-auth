@@ -1,0 +1,13 @@
+﻿[
+  {
+    "cpfNumber": "90526359005",
+    "role": "CUSTOMER_USER",
+    "fullName": "Customer User",
+    "id": "46d6372c-84a9-47d0-9f6d-f28502bbd523",
+    "creationDate": "2026-08-01T12:00:00Z",
+    "email": "user@customer.com",
+    "securityStamp": "a1363286-cc88-47a9-bf31-0d81f08161bd",
+    "passwordHash": "AQAAAAIAAYagAAAAEKSeHdHtCfN38pakeil4oyEL0d07GBEySe6csY8jmXIKT3oEZVcZR7Jngd9qxFgmkQ==",
+    "customerId": "47e311e1-d8d0-4746-b12c-f72b8aba57ca"
+  }
+]

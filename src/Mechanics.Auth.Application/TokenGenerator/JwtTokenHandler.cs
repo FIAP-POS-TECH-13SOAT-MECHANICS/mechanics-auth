@@ -1,6 +1,5 @@
 ﻿using Mechanics.Auth.Application.Options;
 using Mechanics.Auth.Application.Response;
-using Mechanics.Auth.Infra.Data.CachedRepository;
 using Mechanics.Auth.Infra.Data.Models;
 using Mechanics.Auth.Infra.SecretProvider;
 using Microsoft.Extensions.Options;
@@ -14,8 +13,7 @@ namespace Mechanics.Auth.Application.TokenGenerator;
 public class JwtTokenHandler(
     IOptions<JwtOptions> jwtOptions,
     TimeProvider timeProvider,
-    ISecretProvider secretProvider,
-    IRolesCachedRepository rolesRepository)
+    ISecretProvider secretProvider)
     : IJwtTokenHandler
 {
     private readonly JwtOptions _options = jwtOptions.Value;
@@ -103,7 +101,7 @@ public class JwtTokenHandler(
         {
             new("sub", user.Id.ToString()),
             new("customerId", (user.CustomerId ?? Guid.Empty).ToString()),
-            new("role", await rolesRepository.GetRoleName(user.RoleId)),
+            new("role", user.Role),
         };
 
         var privateKey = await secretProvider.GetPrivateKey();
