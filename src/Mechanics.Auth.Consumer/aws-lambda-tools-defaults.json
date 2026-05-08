@@ -1,0 +1,6 @@
+{
+  "profile": "",
+  "region": "",
+  "configuration": "Release",
+  "template": "serverless.template"
+}

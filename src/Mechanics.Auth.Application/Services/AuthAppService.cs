@@ -11,7 +11,7 @@ namespace Mechanics.Auth.Application.Services;
 public class AuthAppService(ILogger<AuthAppService> logger, IUserRepository userRepository, IJwtTokenHandler tokenHandler)
     : IAppService
 {
-    public async Task<TokenResponse?> Login(LoginRequest request)
+    public async Task<TokenResponse?> Login(LoginRequest request, CancellationToken cancellationToken = default)
     {
         var normalizedCpf = new string(request.CpfNumber.Where(char.IsDigit).ToArray());
         if (normalizedCpf.Length != 11)
@@ -21,7 +21,7 @@ public class AuthAppService(ILogger<AuthAppService> logger, IUserRepository user
         }
 
         logger.LogTrace("Fetching user with CPF '{Cpf}'", normalizedCpf[..5]);
-        var user = await userRepository.GetByCpf(normalizedCpf);
+        var user = await userRepository.GetByCpf(normalizedCpf, cancellationToken);
         if (user is null)
         {
             logger.LogDebug("User with CPF '{Cpf}' not found", normalizedCpf[..5]);
@@ -37,14 +37,14 @@ public class AuthAppService(ILogger<AuthAppService> logger, IUserRepository user
             : null;
     }
 
-    public async Task<TokenResponse?> Refresh(RefreshTokenRequest request)
+    public async Task<TokenResponse?> Refresh(RefreshTokenRequest request, CancellationToken cancellationToken = default)
     {
         var userId = tokenHandler.GetUserId(request.RefreshToken);
         if (userId is null)
             return null;
 
         logger.LogTrace("Fetching user with ID '{Id}'", userId);
-        var user = await userRepository.GetById(userId.Value);
+        var user = await userRepository.GetById(userId.Value, cancellationToken);
         if (user is null || !await tokenHandler.ValidateRefreshToken(request.RefreshToken, user.SecurityStamp))
             return null;
 

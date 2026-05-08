@@ -12,6 +12,9 @@ public class UserModel
     [DynamoDBGlobalSecondaryIndexHashKey]
     public required string CpfNumber { get; init; }
 
+    [DynamoDBGlobalSecondaryIndexHashKey]
+    public required string FullName { get; init; }
+
     [DynamoDBProperty]
     public required string PasswordHash { get; set; }
 
@@ -23,4 +26,7 @@ public class UserModel
 
     [DynamoDBProperty]
     public required string Role { get; init; }
+
+    [DynamoDBProperty]
+    public required DateTime LastUpdate { get; init; }
 }

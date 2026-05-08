@@ -1,32 +1,29 @@
 ﻿[
   {
     "id": "db27b85d-b0f3-4300-bb45-7841f0d11617",
-    "fullName": "Administrator User",
     "cpfNumber": "12345678909",
-    "email": "administrator@mechanics.com",
+    "fullName": "ADMINISTRATOR USER",
     "role": "ADMINISTRATOR",
     "securityStamp": "efcaaf76-0535-45fc-a79c-06ab92c064bb",
     "passwordHash": "AQAAAAIAAYagAAAAEPGF9Xsz+ARiCopDgQbQ8gbGubN6bhvNhpKiy8XK2BORE5eV95VywrM9rVE48i2m8w==",
-    "creationDate": "2025-10-12T12:00:00Z"
+    "lastUpdate": "2025-10-12T12:00:00.0000000+00:00"
   },
   {
     "id": "c2a83e5a-27c7-440a-97e3-86234eebb3c7",
-    "fullName": "Attendant User",
     "cpfNumber": "98765432100",
-    "email": "attendant@mechanics.com",
+    "fullName": "ATTENDANT USER",
     "role": "ATTENDANT",
     "securityStamp": "370c4d16-8e11-46ca-9004-e1fb9311e49e",
     "passwordHash": "AQAAAAIAAYagAAAAEEo/VptbCYVPiVkoEVHthpWAZUvV/KJ0WJkg+wKbtXJkmMHmSfnpFT4JTLofugBwyQ==",
-    "creationDate": "2025-10-12T12:00:00Z"
+    "lastUpdate": "2025-10-12T12:00:00.0000000+00:00"
   },
   {
     "id": "4c3b8777-6c4a-4bf3-8ad5-aad48981f7f2",
-    "fullName": "Mechanic User",
     "cpfNumber": "11144477735",
-    "email": "mechanic@mechanics.com",
+    "fullName": "MECHANIC USER",
     "role": "MECHANIC",
     "securityStamp": "0a3bc211-1220-4d20-80e9-bd850d0dc200",
     "passwordHash": "AQAAAAIAAYagAAAAEKSeHdHtCfN38pakeil4oyEL0d07GBEySe6csY8jmXIKT3oEZVcZR7Jngd9qxFgmkQ==",
-    "creationDate": "2025-10-12T12:00:00Z"
+    "lastUpdate": "2025-10-12T12:00:00.0000000+00:00"
   }
 ]

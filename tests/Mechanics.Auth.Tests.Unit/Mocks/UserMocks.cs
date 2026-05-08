@@ -11,10 +11,12 @@ public static class UserMocks
         {
             Id = userId,
             CpfNumber = cpf,
+            FullName = roleName,
             Role = roleName,
             PasswordHash = "",
             SecurityStamp = userId.ToString(),
             CustomerId = Guid.NewGuid(),
+            LastUpdate = new DateTime(2025, 10, 12, 12, 0, 0, DateTimeKind.Utc),
         };
     }
 
@@ -24,10 +26,12 @@ public static class UserMocks
         {
             Id = Guid.NewGuid(),
             CpfNumber = userName,
+            FullName = $"{RoleNames.Administrator} USER",
             Role = RoleNames.Administrator,
             PasswordHash = "",
             SecurityStamp = userName,
             CustomerId = Guid.NewGuid(),
+            LastUpdate = new DateTime(2025, 10, 12, 14, 0, 0, DateTimeKind.Utc),
         };
 
         user.PasswordHash = new PasswordHasher<UserModel>().HashPassword(user, userPassword);
