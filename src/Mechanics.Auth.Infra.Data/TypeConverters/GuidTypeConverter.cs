@@ -20,7 +20,7 @@ public class GuidTypeConverter : IPropertyConverter
 
     public object? FromEntry(DynamoDBEntry entry)
     {
-        if (entry.AsGuid() == Guid.Empty)
+        if (entry.AsDynamoDBNull() is not null)
             return null;
 
         if (entry is not Primitive { Value: string } primitive ||

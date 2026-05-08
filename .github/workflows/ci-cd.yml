@@ -46,6 +46,7 @@ jobs:
       environment: ${{ needs.resolve-environment.outputs.environment }}
       project_path: ./src/Mechanics.Auth.Api
       function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth-token
+      consumer_group: auth-api
     secrets: inherit
 
   seed:
@@ -70,4 +71,5 @@ jobs:
       environment: ${{ needs.resolve-environment.outputs.environment }}
       project_path: ./src/Mechanics.Auth.Consumer
       function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth-consumer
+      consumer_group: auth-consumer
     secrets: inherit
