@@ -1,28 +1,30 @@
 using Amazon.DynamoDBv2.Model;
 using Amazon.Lambda.Core;
+using Amazon.Lambda.Serialization.SystemTextJson;
 using Amazon.Lambda.SQSEvents;
 using Mechanics.Auth.Application.Consumers;
 using Mechanics.Auth.Infra.CrossCutting.IoC.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 
-[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
+[assembly: LambdaSerializer(typeof(DefaultLambdaJsonSerializer))]
 
 namespace Mechanics.Auth.Consumer;
 
 public class Function
 {
+    private readonly UserChangedEventConsumer _service = CreateService();
+
     public async Task<SQSBatchResponse> Handler(SQSEvent sqsEvent, ILambdaContext context)
     {
         var response = new SQSBatchResponse { BatchItemFailures = [] };
-        var service = CreateService();
 
         foreach (var record in sqsEvent.Records)
         {
             try
             {
                 var message = JsonSerializer.Deserialize<UserChangedEvent>(record.Body)!;
-                await service.Save(message);
+                await _service.Save(message);
             }
             catch (ConditionalCheckFailedException)
             {
@@ -45,7 +47,7 @@ public class Function
     {
         var services = new ServiceCollection();
         services.AddDataRepositories()
-            .AddAppServices();
+            .AddEventConsumers();
 
         var provider = services.BuildServiceProvider();
         return provider.GetRequiredService<UserChangedEventConsumer>();

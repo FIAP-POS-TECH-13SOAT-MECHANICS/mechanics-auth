@@ -5,7 +5,7 @@ namespace Mechanics.Auth.Infra.CrossCutting.IoC.Extensions;
 
 public static class EventConsumersExtensions
 {
-    public static IServiceCollection AddAppServices(this IServiceCollection services)
+    public static IServiceCollection AddEventConsumers(this IServiceCollection services)
     {
         var appServices = typeof(IEventConsumer).Assembly.GetTypes()
             .Where(type => type.GetInterfaces().Contains(typeof(IEventConsumer)));
