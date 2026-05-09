@@ -14,6 +14,8 @@ namespace Mechanics.Auth.Tests.Unit.Tests;
 [TestCategory("AppService")]
 public class AuthAppServiceTests
 {
+    public TestContext TestContext { get; set; }
+
     #region efetuar login
 
     [TestMethod("Efetuar login com usuário válido deve retornar token")]
@@ -30,7 +32,7 @@ public class AuthAppServiceTests
             Password = "TEST_5eCre+Key",
         };
 
-        var result = await appService.Login(request);
+        var result = await appService.Login(request, TestContext.CancellationTokenSource.Token);
 
         Assert.IsNotNull(result);
         Assert.AreEqual(token, result.AccessToken);
@@ -51,7 +53,7 @@ public class AuthAppServiceTests
             Password = "wrong-password",
         };
 
-        var result = await appService.Login(request);
+        var result = await appService.Login(request, TestContext.CancellationTokenSource.Token);
 
         Assert.IsNull(result);
     }
@@ -72,7 +74,7 @@ public class AuthAppServiceTests
         var appService = new AuthAppService(NullLogger<AuthAppService>.Instance, repository.Object, tokenHandlerStub.Object);
         var request = new RefreshTokenRequest { RefreshToken = refreshToken };
 
-        var result = await appService.Refresh(request);
+        var result = await appService.Refresh(request, TestContext.CancellationTokenSource.Token);
 
         Assert.IsNotNull(result);
         Assert.AreEqual(token, result.AccessToken);
@@ -87,8 +89,8 @@ public class AuthAppServiceTests
     {
         var userRepository = new Mock<IUserRepository>();
 
-        userRepository.Setup(repository => repository.GetById(user.Id)).ReturnsAsync(user);
-        userRepository.Setup(repository => repository.GetByCpf(user.CpfNumber)).ReturnsAsync(user);
+        userRepository.Setup(repository => repository.GetById(user.Id, It.IsAny<CancellationToken>())).ReturnsAsync(user);
+        userRepository.Setup(repository => repository.GetByCpf(user.CpfNumber, It.IsAny<CancellationToken>())).ReturnsAsync(user);
 
         return userRepository;
     }

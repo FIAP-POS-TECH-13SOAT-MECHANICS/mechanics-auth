@@ -2,5 +2,5 @@
 
 public class TableNames
 {
-    public required string Users { get; init; }
+    public required string Users { get; set; }
 }

@@ -36,8 +36,8 @@ jobs:
         id: resolve
         uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/actions/resolve-environment@main
 
-  deploy:
-    name: Deploy on AWS Lambda
+  deploy-api:
+    name: Deploy Token Function
     needs:
       - tests
       - resolve-environment
@@ -46,16 +46,30 @@ jobs:
       environment: ${{ needs.resolve-environment.outputs.environment }}
       project_path: ./src/Mechanics.Auth.Api
       function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth-token
+      concurrency_group: auth-api
     secrets: inherit
 
   seed:
     name: Seed DynamoDB
     needs:
       - resolve-environment
-      - deploy
+      - deploy-api
     uses: ./.github/workflows/seed.yml
     with:
       environment: ${{ needs.resolve-environment.outputs.environment }}
       seeds_path: ./seeds
       service_name: auth
+    secrets: inherit
+
+  deploy-consumer:
+    name: Deploy Consumer Function
+    needs:
+      - tests
+      - resolve-environment
+    uses: FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra/.github/workflows/deploy-lambda.yml@main
+    with:
+      environment: ${{ needs.resolve-environment.outputs.environment }}
+      project_path: ./src/Mechanics.Auth.Consumer
+      function_name: fiap-mechanics-${{ needs.resolve-environment.outputs.environment }}-auth-consumer
+      concurrency_group: auth-consumer
     secrets: inherit

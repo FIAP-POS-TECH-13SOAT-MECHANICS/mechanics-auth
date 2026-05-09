@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Sol
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Api Layer", "1. Api Layer", "{5798CE03-5B56-460D-BB96-01A5ADAF580B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1. Api Layer", "1.1. Api Layer", "{5798CE03-5B56-460D-BB96-01A5ADAF580B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application Layer", "2. Application Layer", "{A32A0EDF-C9CB-459A-84A3-F8504308FC62}"
 EndProject
@@ -33,6 +33,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Tests.Integration", "tests\Mechanics.Auth.Tests.Integration\Mechanics.Auth.Tests.Integration.csproj", "{E36E4641-421C-4B19-A745-7378D4F98E34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Api", "src\Mechanics.Auth.Api\Mechanics.Auth.Api.csproj", "{2C817A5C-1A49-4075-828C-C97A61912BE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.2. Consumer Layer", "1.2. Consumer Layer", "{405EC78D-0FB6-4198-9D05-183C37AB5D90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanics.Auth.Consumer", "src\Mechanics.Auth.Consumer\Mechanics.Auth.Consumer.csproj", "{2E71F36A-129E-48EE-8AEB-534ADB542662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,10 @@ Global
 		{2C817A5C-1A49-4075-828C-C97A61912BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C817A5C-1A49-4075-828C-C97A61912BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C817A5C-1A49-4075-828C-C97A61912BE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E71F36A-129E-48EE-8AEB-534ADB542662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E71F36A-129E-48EE-8AEB-534ADB542662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E71F36A-129E-48EE-8AEB-534ADB542662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E71F36A-129E-48EE-8AEB-534ADB542662}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FC00C1E1-8022-4535-9D1E-C1D3BC37FECC} = {A32A0EDF-C9CB-459A-84A3-F8504308FC62}
@@ -80,5 +88,6 @@ Global
 		{F07A4AC1-62B0-40E1-BF58-8D05FDCEE9F0} = {F8313E9C-9E86-4F3B-8760-07217B092DF9}
 		{E36E4641-421C-4B19-A745-7378D4F98E34} = {14677E8A-B78F-4535-9FDE-02D4ECC74ADE}
 		{2C817A5C-1A49-4075-828C-C97A61912BE1} = {5798CE03-5B56-460D-BB96-01A5ADAF580B}
+		{2E71F36A-129E-48EE-8AEB-534ADB542662} = {405EC78D-0FB6-4198-9D05-183C37AB5D90}
 	EndGlobalSection
 EndGlobal

@@ -1,13 +1,22 @@
 ﻿[
   {
-    "cpfNumber": "90526359005",
-    "role": "CUSTOMER_USER",
-    "fullName": "Customer User",
     "id": "46d6372c-84a9-47d0-9f6d-f28502bbd523",
-    "creationDate": "2026-08-01T12:00:00Z",
-    "email": "user@customer.com",
+    "cpfNumber": "90526359005",
+    "fullName": "CUSTOMER USER",
+    "role": "CUSTOMER_USER",
     "securityStamp": "a1363286-cc88-47a9-bf31-0d81f08161bd",
     "passwordHash": "AQAAAAIAAYagAAAAEKSeHdHtCfN38pakeil4oyEL0d07GBEySe6csY8jmXIKT3oEZVcZR7Jngd9qxFgmkQ==",
-    "customerId": "47e311e1-d8d0-4746-b12c-f72b8aba57ca"
+    "customerId": "47e311e1-d8d0-4746-b12c-f72b8aba57ca",
+    "lastUpdate": "2025-10-12T12:00:00.0000000+00:00"
+  },
+  {
+    "id": "61b33bf9-6526-4fca-afa4-7c0cacc5fc8e",
+    "cpfNumber": "91977509053",
+    "fullName": "CUSTOMER ADMIN",
+    "role": "CUSTOMER_ADMIN",
+    "securityStamp": "e49b921d-fddb-4d69-8619-d30ed4434e2d",
+    "passwordHash": "AQAAAAIAAYagAAAAEJRuz/uxV6+PYc2XUkMo0EFNhbpIFiLpN6lHsiuKQ1eGnHfHX5iN/SbnWQ6zQIPzjw==",
+    "customerId": "ef82dd09-ef58-4d35-84ae-4f82b9bf038d",
+    "lastUpdate": "2025-10-12T12:00:00.0000000+00:00"
   }
 ]

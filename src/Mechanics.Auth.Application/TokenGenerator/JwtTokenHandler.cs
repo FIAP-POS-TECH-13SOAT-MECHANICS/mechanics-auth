@@ -52,7 +52,7 @@ public class JwtTokenHandler(
         {
             new("sub", serviceId.ToString()),
             new("customerId", Guid.Empty.ToString()),
-            new("role", "SERVICE"), // TODO criar role para serviços
+            new("role", "SERVICE"),
         };
 
         var privateKey = await secretProvider.GetPrivateKey();

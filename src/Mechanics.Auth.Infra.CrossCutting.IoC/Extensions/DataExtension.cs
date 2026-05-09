@@ -11,29 +11,45 @@ namespace Mechanics.Auth.Infra.CrossCutting.IoC.Extensions;
 
 public static class DataExtension
 {
-    public static IServiceCollection AddDataRepositories(this IServiceCollection services, IConfiguration configuration)
+    extension(IServiceCollection services)
     {
-        services.AddSingleton<IAmazonDynamoDB>(_ =>
+        public IServiceCollection AddDataRepositories(IConfiguration configuration)
         {
-            var options = configuration.GetSection("AwsCredentials").Get<AwsCredentialsOptions>()!;
+            services.AddSingleton<IAmazonDynamoDB>(_ =>
+            {
+                var options = configuration.GetSection("AwsCredentials").Get<AwsCredentialsOptions>()!;
 
-            if (options.UseLocalstack)
-                return new AmazonDynamoDBClient(
-                    new BasicAWSCredentials("local", "empty-key"),
-                    new AmazonDynamoDBConfig
-                    {
-                        RegionEndpoint = RegionEndpoint.GetBySystemName(options.Region),
-                        ServiceURL = options.LocalstackUrl,
-                    });
+                if (options.UseLocalstack)
+                    return new AmazonDynamoDBClient(
+                        new BasicAWSCredentials("local", "empty-key"),
+                        new AmazonDynamoDBConfig
+                        {
+                            RegionEndpoint = RegionEndpoint.GetBySystemName(options.Region),
+                            ServiceURL = options.LocalstackUrl,
+                        });
 
-            return new AmazonDynamoDBClient(new AmazonDynamoDBConfig());
-        });
+                return new AmazonDynamoDBClient(new AmazonDynamoDBConfig());
+            });
 
-        services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
-        services.Configure<TableNames>(configuration.GetSection(nameof(TableNames)));
+            services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
+            services.Configure<TableNames>(configuration.GetSection(nameof(TableNames)));
 
-        services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
-        return services;
+            return services;
+        }
+
+        public IServiceCollection AddDataRepositories()
+        {
+            services.AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>();
+            services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
+
+            services.Configure<TableNames>(options =>
+                options.Users = Environment.GetEnvironmentVariable("TableNames__Users")!);
+
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            return services;
+        }
     }
 }

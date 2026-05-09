@@ -2,25 +2,30 @@
 
 Repositório do projeto destinado à geração de tokens JWT para o ecossistema da Oficina Mecânica da FIAP.
 
-Este projeto consulta as tabelas do projeto **Fiap.Mechanics**, portanto, é necessário executar primeiro para rodar as migrations e garantir a estrutura do banco de dados.
+Este projeto consulta as tabelas do projeto **Fiap.Mechanics**, portanto, é necessário executar primeiro para rodar as
+migrations e garantir a estrutura do banco de dados.
 
 ## Definição do ambiente
 
 - SDK: .NET 10.0
-- Banco de dados: DynamoDB (via [Fiap.Mechanics](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat))
+- Banco de dados: DynamoDB
 - Provedor de Segredos: AWS Secrets Manager
 
 ## Pré-requisitos
 
-Para rodar o projeto localmente, é mandatório estar logado e configurado no AWS CLI para que a aplicação consiga recuperar as chaves de assinatura do JWT:
+Para rodar o projeto localmente, é mandatório estar logado e configurado no AWS CLI para que a aplicação consiga
+recuperar as chaves de assinatura do JWT:
 
 ```powershell
 aws configure
 ```
 
-Execute os scripts do [repositório de infraestrutura](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra) e do [repositório de banco de dados](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-database) para provisionar o ambiente antes de executar a aplicação.
+Execute os scripts do [repositório de infraestrutura](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra)
+e do [repositório de banco de dados](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-database) para
+provisionar o ambiente antes de executar a aplicação.
 
-O comando abaixo inicia a API na porta 5050. Utilize uma aplicação como [Postman](https://www.postman.com/downloads) para testar.
+O comando abaixo inicia a API na porta 5050. Utilize uma aplicação como [Postman](https://www.postman.com/downloads)
+para testar.
 
 ```powershell
 dotnet run --project .\src\Mechanics.Auth.Api
@@ -29,11 +34,20 @@ dotnet run --project .\src\Mechanics.Auth.Api
 ## Script de deploy
 
 Execute o script Powershell para fazer deploy da aplicação na AWS.
-Certifique-se de antes ter provisionado o ambiente usando os scripts do [repositório de infraestrutura](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra).
+Certifique-se de antes ter provisionado o ambiente usando os scripts
+do [repositório de infraestrutura](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-infra).
 
 ```powershell
-.\scripts\deploy-function dev
+.\scripts\deploy-function dev all -ApplySeeds
 ```
+
+O script aceita os seguintes parâmetros:
+
+| Parâmetro      | Valores aceitos          | Padrão | Descrição                                                    |
+|----------------|--------------------------|--------|--------------------------------------------------------------|
+| `-Environment` | `dev`, `stg`, `prod`     | `dev`  | Ambiente de destino do deploy.                               |
+| `-Function`    | `api`, `consumer`, `all` | `all`  | Função a ser publicada. `all` publica a API e o Consumer.    |
+| `-ApplySeeds`  | (switch)                 |        | Quando presente, executa os seeds do DynamoDB após o deploy. |
 
 ## Acessar via API Gateway
 
@@ -114,6 +128,19 @@ curl --location 'http://localhost:5050/auth/service-token' \
 
 O token retornado possui uma validade curta e não gera um `refreshToken`.
 Para mais informações, consulte [Integração entre microsserviços](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/Mechanics-13soat/blob/main/docs/integration.md).
+
+## Fila de sincronização
+
+O projeto Consumer monitora a fila SQS `user-changed`, publicada pelo
+microsserviço [Identity](https://github.com/FIAP-POS-TECH-13SOAT-MECHANICS/mechanics-identity). Cada mensagem contém os
+dados de um usuário criado ou alterado no Identity e é processada para manter o DynamoDB do Auth sincronizado.
+
+O Consumer é provisionado como uma Lambda Function separada e associado à fila via Event Source Mapping. O deploy é
+realizado pelo mesmo script:
+
+```powershell
+.\scripts\deploy-function dev consumer
+```
 
 ## Diagrama desse projeto
 
