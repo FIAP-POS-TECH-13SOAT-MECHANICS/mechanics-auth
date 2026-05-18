@@ -1,4 +1,4 @@
-# Fiap.Mechanics.Auth
+# Auth
 
 Repositório do projeto destinado à geração de tokens JWT para o ecossistema da Oficina Mecânica da FIAP.
 
@@ -10,6 +10,30 @@ migrations e garantir a estrutura do banco de dados.
 - SDK: .NET 10.0
 - Banco de dados: DynamoDB
 - Provedor de Segredos: AWS Secrets Manager
+
+```mermaid
+graph TD
+    GW[API Gateway] -->|HTTP| AL[Auth API\nLambda Function]
+    AL -->|consulta| DB[(DynamoDB)]
+
+    UC[SQS: user-changed] -->|consumido por| CL[Auth Consumer\nLambda Function]
+    CL -->|persiste| DB
+```
+
+> O serviço é composto por duas Lambda Functions independentes: a **Auth API**, responsável pelos
+> endpoints de login e geração de tokens, e o **Auth Consumer**, que mantém o DynamoDB sincronizado
+> com as alterações de usuários publicadas pelo Identity.
+
+## Messageria
+
+### Consumers
+
+| Fila                                  | Descrição                                                                 |
+|---------------------------------------|---------------------------------------------------------------------------|
+| `fiap-mechanics-{env}-user-changed`   | Sincroniza os dados de usuário com o DynamoDB.                            |
+
+> A fila é consumida via **Event Source Mapping**, não pela biblioteca `Mechanics.Infra.Messaging`.
+> O SQS invoca o Auth Consumer diretamente - não há `IEventConsumer<T>` nem `BackgroundService` neste serviço.
 
 ## Pré-requisitos
 
