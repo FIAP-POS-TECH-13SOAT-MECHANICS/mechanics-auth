@@ -25,7 +25,7 @@ jobs:
     with:
       enable_sonar: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name == 'workflow_dispatch' && github.ref_name == 'main') }}
       sonar_project_key: ${{ vars.SONAR_PROJECT_KEY }}
-      secrets: inherit
+    secrets: inherit
 
   resolve-environment:
     name: Resolve environment name
