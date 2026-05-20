@@ -19,7 +19,6 @@ public class JwtTokenHandler(
     private readonly JwtOptions _options = jwtOptions.Value;
     private readonly JsonWebTokenHandler _tokenHandler = new();
     private const string JwtTokenIssuer = "fiap-mechanics";
-    private const string RefreshTokenSalt = "ef932c68c005c43607b2e076ced1472c";
 
     public Guid? GetUserId(string token)
     {
@@ -81,7 +80,7 @@ public class JwtTokenHandler(
             return false;
         var userId = _tokenHandler.ReadJsonWebToken(refreshToken).Subject;
 
-        var refreshTokenKey = Encoding.ASCII.GetBytes($"{userId}:{securityStamp}:{RefreshTokenSalt}");
+        var refreshTokenKey = Encoding.ASCII.GetBytes($"{userId}:{securityStamp}:{_options.RefreshTokenSalt}");
         var validationResult = await _tokenHandler.ValidateTokenAsync(refreshToken, new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -122,7 +121,7 @@ public class JwtTokenHandler(
     {
         var claims = new List<Claim> { new("sub", user.Id.ToString()) };
 
-        var key = Encoding.ASCII.GetBytes($"{user.Id}:{user.SecurityStamp}:{RefreshTokenSalt}");
+        var key = Encoding.ASCII.GetBytes($"{user.Id}:{user.SecurityStamp}:{_options.RefreshTokenSalt}");
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Issuer = JwtTokenIssuer,
