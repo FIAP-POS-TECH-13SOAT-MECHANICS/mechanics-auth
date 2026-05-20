@@ -13,6 +13,7 @@ public static class TestProperties
     public static async Task Setup(TestContext context)
     {
         Environment.SetEnvironmentVariable("JwtOptions__AccessTokenLifetime", "60");
+        Environment.SetEnvironmentVariable("JwtOptions__RefreshTokenSalt", "ef932c68c005c43607b2e076ced1472c");
 
         var rsa = RSA.Create();
         var secretProvider = new StaticSecretProvider(rsa);

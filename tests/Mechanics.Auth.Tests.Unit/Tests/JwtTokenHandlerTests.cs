@@ -38,6 +38,16 @@ public class JwtTokenHandlerTests
         Assert.AreEqual(user.Id, userId);
     }
 
+    [TestMethod("Deve retornar nulo para token inválido")]
+    public void It_ShouldReturnNull_WhenTokenIsInvalid()
+    {
+        var handler = CreateInstance(TimeProvider.System);
+
+        var userId = handler.GetUserId("not-a-jwt-token");
+
+        Assert.IsNull(userId);
+    }
+
     [TestMethod("Deve retornar true para refresh token válido")]
     public async Task It_ShouldReturnTrue_WhenValidateRefreshToken()
     {
@@ -108,6 +118,7 @@ public class JwtTokenHandlerTests
         {
             AccessTokenLifetime = 10,
             RefreshTokenLifetime = 120,
+            RefreshTokenSalt = "ef932c68c005c43607b2e076ced1472c",
             ServiceIds = new Dictionary<string, Guid>
             {
                 { "identity", new Guid("b1d6e95e-ca51-4226-bfb8-97343dca1842") },

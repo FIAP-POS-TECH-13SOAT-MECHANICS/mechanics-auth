@@ -16,4 +16,9 @@ public class JwtOptions
     ///     IDs dos serviços internos.
     /// </summary>
     public required Dictionary<string, Guid> ServiceIds { get; init; }
+
+    /// <summary>
+    ///     Salt usado na assinatura do refresh token.
+    /// </summary>
+    public required string RefreshTokenSalt { get; init; }
 }
