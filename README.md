@@ -5,6 +5,8 @@ Repositório do projeto destinado à geração de tokens JWT para o ecossistema 
 Este projeto consulta as tabelas do projeto **Fiap.Mechanics**, portanto, é necessário executar primeiro para rodar as
 migrations e garantir a estrutura do banco de dados.
 
+[![Quality Gate Status](http://34.231.107.126/api/project_badges/measure?project=fiap-mechanics-auth&metric=alert_status&token=sqb_dbf3a108b0835b1d96bd469a10b892aa257c1068)](http://34.231.107.126/dashboard?id=fiap-mechanics-auth)
+
 ## Definição do ambiente
 
 - SDK: .NET 10.0
@@ -169,3 +171,21 @@ realizado pelo mesmo script:
 ## Diagrama desse projeto
 
 ![Infraestructure](./images/lambda.png)
+
+
+### SonarQube no CI
+
+Este repositório usa workflow reutilizável do `mechanics-infra` para testes e análise SonarQube.
+
+Configurações necessárias em `Settings > Secrets and variables > Actions`:
+
+- Secret `SONAR_HOST_URL`
+- Secret `SONAR_TOKEN`
+- Variable `SONAR_PROJECT_KEY` (valor: `fiap-mechanics-auth`)
+
+A análise é habilitada em:
+
+- `pull_request` com destino em `main`;
+- `workflow_dispatch` quando executado na branch `main`.
+
+O SonarQube faz o coverage da camada de domínio e aplicação. Para isso, o workflow executa os testes com cobertura e publica os resultados usando o SonarScanner.
